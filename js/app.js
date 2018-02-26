@@ -1,8 +1,12 @@
 /*
  * Create a list that holds all of your cards
  */
- const cardList = document.querySelectorAll('.deck li');
- 
+let cardList = document.querySelectorAll('.deck li');
+let arrOfCards = [];
+let deck = document.querySelector('.deck');
+let card = document.querySelectorAll('.card');
+let documentFragment = document.createDocumentFragment();
+
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -13,7 +17,23 @@
  //shufle li el
  //delete old li el
  //append shuffled el
- function displayCards () {}
+ function displayCards () {
+   //convert nodeList to array
+   for (let i = 0; i < cardList.length; i++) {
+     arrOfCards[i] = cardList[i];
+   }
+   //shuffle cards
+   arrOfCards = shuffle(arrOfCards);
+   //loop
+   arrOfCards.forEach(function (el) {
+     //remove old cards
+     el.remove();
+     el.className = 'card';
+     documentFragment.appendChild(el);
+   });
+   //append shuffled cards
+   deck.appendChild(documentFragment);
+ }
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -26,10 +46,10 @@ function shuffle(array) {
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
     }
-
     return array;
 }
 
+displayCards ();
 
 /*
  * set up the event listener for a card. If a card is clicked:
