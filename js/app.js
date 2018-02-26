@@ -4,8 +4,9 @@
 let cardList = document.querySelectorAll('.deck li');
 let arrOfCards = [];
 let deck = document.querySelector('.deck');
-let card = document.querySelectorAll('.card');
+let cards = document.querySelectorAll('.card');
 let documentFragment = document.createDocumentFragment();
+let counter = 0;
 
 /*
  * Display the cards on the page
@@ -13,11 +14,8 @@ let documentFragment = document.createDocumentFragment();
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
- // copy all li el
- //shufle li el
- //delete old li el
- //append shuffled el
- function displayCards () {
+
+ function displayCards() {
    //convert nodeList to array
    for (let i = 0; i < cardList.length; i++) {
      arrOfCards[i] = cardList[i];
@@ -49,7 +47,7 @@ function shuffle(array) {
     return array;
 }
 
-displayCards ();
+displayCards();
 
 /*
  * set up the event listener for a card. If a card is clicked:
@@ -61,3 +59,14 @@ displayCards ();
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+ function displaySymbol(e) {
+   e.target.classList.add('show', 'open');
+ }
+
+
+for (let x = 0; x < cards.length; x++) {
+ cards[x].addEventListener('click', function(e) {
+   displaySymbol(e);
+ });
+}
