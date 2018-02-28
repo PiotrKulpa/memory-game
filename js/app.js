@@ -84,11 +84,21 @@ displayCards();
    displayMoves.innerText = counter;
  }
 
+ function finalScore() {
+   if(openCardsArr.length >= 8) {
+     alert(`Finished with ${counter} moves`);
+     for(let i = 0; i < cards.length; i++) {
+       cards[i].style.display = 'none';
+     };
+   };
+ }
+
 for (let x = 0; x < cards.length; x++) {
  cards[x].addEventListener('click', function(e) {
    displaySymbol(e);
    checkList(e);
    openedCardsList(e);
    incrementCounter();
+   finalScore();
  });
 }
