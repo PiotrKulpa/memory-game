@@ -6,7 +6,9 @@ let arrOfCards = [];
 let deck = document.querySelector('.deck');
 let cards = document.querySelectorAll('.card');
 let documentFragment = document.createDocumentFragment();
+let openCardsArr = [];
 let counter = 0;
+let displayMoves = document.querySelector('.moves');
 
 /*
  * Display the cards on the page
@@ -64,9 +66,29 @@ displayCards();
    e.target.classList.add('show', 'open');
  }
 
+ function openedCardsList(e) {
+  openCardsArr.push(e.target.firstElementChild.className);
+ }
+
+ function checkList(e) {
+   if (openCardsArr.includes(e.target.firstElementChild.className)) {
+     var similarCards =  document.getElementsByClassName(e.target.firstElementChild.className);
+     for (let a = 0; a < similarCards.length; a++) {
+       similarCards[a].parentNode.classList.add('match');
+     }
+   };
+ }
+
+ function incrementCounter() {
+   counter++;
+   displayMoves.innerText = counter;
+ }
 
 for (let x = 0; x < cards.length; x++) {
  cards[x].addEventListener('click', function(e) {
    displaySymbol(e);
+   checkList(e);
+   openedCardsList(e);
+   incrementCounter();
  });
 }
