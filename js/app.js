@@ -9,6 +9,7 @@ let documentFragment = document.createDocumentFragment();
 let openCardsArr = [];
 let counter = 0;
 let displayMoves = document.querySelector('.moves');
+let restart = document.querySelector('.restart');
 
 /*
  * Display the cards on the page
@@ -87,9 +88,9 @@ displayCards();
  function finalScore() {
    if(openCardsArr.length >= 8) {
      alert(`Finished with ${counter} moves`);
-     for(let i = 0; i < cards.length; i++) {
-       cards[i].style.display = 'none';
-     };
+     // for(let i = 0; i < cards.length; i++) {
+     //   cards[i].style.display = 'none';
+     // };
    };
  }
 
@@ -102,3 +103,9 @@ for (let x = 0; x < cards.length; x++) {
    finalScore();
  });
 }
+
+restart.addEventListener('click', function(e) {
+  displayCards();
+  openCardsArr = [];
+  counter = 0;
+});
