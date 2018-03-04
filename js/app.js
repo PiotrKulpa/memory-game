@@ -8,12 +8,14 @@ let cards = document.querySelectorAll('.card');
 let documentFragment = document.createDocumentFragment();
 let openCardsArr = [];
 let counter = 0;
-let displayMoves = document.querySelector('.moves');
-let restart = document.querySelector('.restart');
+let displayMoves = document.querySelectorAll('.moves');
+let displayTime = document.querySelectorAll('.timer');
+let restart = document.querySelectorAll('.restart');
 let timeOfGame = 0;
 let openedCard;
 let stars = document.querySelectorAll('.stars li');
 let startTimer;
+let popup = document.querySelector('.popup');
 
  /**
  * @function
@@ -21,7 +23,12 @@ let startTimer;
  */
  function init() {
    clearTimeout(startTimer);
-   displayMoves.innerText = 0;
+   displayMoves.forEach((el) => {
+     el.innerText = 0;
+   });
+   displayTime.forEach((el) => {
+     el.innerText = 0;
+   });
    timeOfGame = 0;
    openCardsArr = [];
    counter = 0;
@@ -31,6 +38,7 @@ let startTimer;
    stars.forEach(function(el) {
      el.style.display = 'inline-block';
    });
+   popup.style.display = 'none';
  }
 
  /**
@@ -159,7 +167,10 @@ function shuffle(array) {
  */
  function incrementCounter() {
    counter++;
-   displayMoves.innerText = counter;
+   //displayMoves.innerText = counter;
+   displayMoves.forEach((el) => {
+     el.innerText = counter;
+   });
    switch(true) {
      case counter > 20 && counter < 24:
       stars[2].style.display = 'none';
@@ -176,7 +187,8 @@ function shuffle(array) {
  */
  function finalScore() {
    if(openCardsArr.length === 8) {
-     alert(`Finished with ${counter} moves in ${timeOfGame} seconds`);
+     popup.style.display = 'block';
+     popup.classList.add('slide-bottom');
      clearTimeout(startTimer);
    };
  }
@@ -198,6 +210,10 @@ function shuffle(array) {
  function stopwatch() {
    startTimer = setTimeout(function () {
      timeOfGame++;
+     //displayTime.innerText = timeOfGame;
+     displayTime.forEach((el) => {
+       el.innerText = timeOfGame;
+     });
      stopwatch();
  }, 1000);
 }
@@ -206,6 +222,8 @@ function shuffle(array) {
 init();
 
 /** Restart game*/
-restart.addEventListener('click', function(e) {
-  init();
+restart.forEach((el)=>{
+  el.addEventListener('click', function(e) {
+    init();
+  });
 });
