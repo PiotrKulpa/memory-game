@@ -48,7 +48,7 @@ h1 {
    text-align: center;
  }
 
- .popup .fa-check-circle, .popup .fa-repeat {
+ .popup .fa-check-circle, .popup .fa-repeat, .popup .fa-star {
    font-size: 4em;
    color: white;
    cursor: pointer;
