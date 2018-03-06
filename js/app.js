@@ -1,21 +1,19 @@
  /**
  * @description DOM elements and temporary files.
  */
-let cardList = document.querySelectorAll('.deck li');
-let arrOfCards = [];
-let deck = document.querySelector('.deck');
-let cards = document.querySelectorAll('.card');
-let documentFragment = document.createDocumentFragment();
-let openCardsArr = [];
-let counter = 0;
-let displayMoves = document.querySelectorAll('.moves');
-let displayTime = document.querySelectorAll('.timer');
-let restart = document.querySelectorAll('.restart');
-let timeOfGame = 0;
-let openedCard;
-let stars = document.querySelectorAll('.stars');
-let startTimer;
-let popup = document.querySelector('.popup');
+
+let arrOfCards = [],
+    cards = document.querySelectorAll('.card'),
+    openCardsArr = [],
+    counter = 0,
+    displayMoves = document.querySelectorAll('.moves'),
+    displayTime = document.querySelectorAll('.timer'),
+    restart = document.querySelectorAll('.restart'),
+    timeOfGame = 0,
+    openedCard,
+    stars = document.querySelectorAll('.stars'),
+    startTimer,
+    popup = document.querySelector('.popup');
 
  /**
  * @function
@@ -47,7 +45,7 @@ const init = () => {
  * @function
  * @description Initialize card click.
  */
- function initClickCard() {
+ const initClickCard = () => {
    for (let x = 0; x < cards.length; x++) {
     cards[x].addEventListener('click', clickCard);
    }
@@ -55,29 +53,32 @@ const init = () => {
 
  /**
  * @function
- * @description Remove cards click.
+ * @description Clear all cards click.
  */
- function removeClickCard() {
-   for (let x = 0; x < cards.length; x++) {
+ const removeClickCard = () => {
+  for (let x = 0; x < cards.length; x++) {
     cards[x].removeEventListener('click', clickCard);
-   }
+  };
  }
 
  /**
  * @function
  * @description Remove click from matched cards.
  */
- function removeClickMatched() {
-   arrOfCards.forEach((el) => {
-     el.parentNode.removeEventListener('click', clickCard);
+ const removeClickMatched = () => {
+   openCardsArr.forEach((el) => {
+     el.removeEventListener('click', clickCard);
    });
  }
 
  /**
  * @function
- * @description Create a list that holds all of your cards.
+ * @description Display shuffled cards.
  */
- function displayCards() {
+ const displayCards = () => {
+   let documentFragment = document.createDocumentFragment(),
+      deck = document.querySelector('.deck'),
+      cardList = document.querySelectorAll('.deck li');
    //convert nodeList to array
    for (let i = 0; i < cardList.length; i++) {
      arrOfCards[i] = cardList[i];
@@ -99,7 +100,7 @@ const init = () => {
 * @function
 * @description Shuffle function from http://stackoverflow.com/a/2450976.
 */
-function shuffle(array) {
+const shuffle = (array) => {
     var currentIndex = array.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
@@ -114,7 +115,7 @@ function shuffle(array) {
 
  /**
  * @function
- * @description Open card.
+ * @description Show card.
  */
  const displaySymbol = (e) => {
    e.target.classList.add('show', 'open');
@@ -122,72 +123,100 @@ function shuffle(array) {
 
  /**
  * @function
- * @description Opened cards list.
+ * @description List of opened cards.
  */
- function openedCardsList(e) {
+ const openedCardsList = (e) => {
    /** Insert opened card to list of opened cards*/
-  openCardsArr.push(e.target.firstElementChild.className);
-  /** Set second(even) opened card*/
+   openCardsArr.push(e.target);
+ }
+
+ /**
+ * @function
+ * @description Get name of  first opened card.
+ */
+ const firstCard = (e) => {
   openedCard = e.target;
+ }
+
+ /**
+ * @function
+ * @description Compare cards.
+ */
+ let compareCards = (e) => {
+   let arrOfClass = [];
+   openCardsArr.forEach((el) => {
+     arrOfClass.push(el.firstElementChild.className);
+   })
+   return arrOfClass.includes(e.target.firstElementChild.className);
  }
 
  /**
  * @function
  * @description Check opened cards list.
  */
- function checkList(e) {
+ const checkList = (e) => {
    /** Check even clicks. */
    if (counter % 2 === 0) {
      /** Check if cards match. */
      /** If cards match. */
-     if (openCardsArr.includes(e.target.firstElementChild.className)) {
-       /** Get similar cards.*/
-       var similarCards =  document.getElementsByClassName(e.target.firstElementChild.className);
+     if (compareCards(e)) {
+       var similarCards =  document.getElementsByClassName(e.target.className);
+
        /** Set style to 'match'. */
        for (let a = 0; a < similarCards.length; a++) {
-         similarCards[a].parentNode.classList.add('match');
+         similarCards[a].classList.add('match');
        };
-       /** Remove click from matched cards. */
-       e.target.removeEventListener('click', clickCard);
-       openedCard.removeEventListener('click', clickCard);
 
-       /** Add cards to opened list. */
-       openedCardsList(e);
+       /** Insert card to list of opened cards. */
+       openCardsArr.push(e.target);
+
+       /** Remove click from matched cards. */
+       removeClickMatched();
 
        /** Show final scores if all cards match. */
        finalScore();
+
       /** If cards not match.*/
      } else {
-
-       /** Remove click from not matched cards. */
+       /** Remove click from all cards. */
        removeClickCard();
-       /** Show not matched cards with red background.*/
+
+       /** Add not-match style to last 2 cards. */
        openedCard.classList.add('not-match');
        e.target.classList.add('not-match');
+        /** Insert card to list of opened cards. */
+       openedCardsList(e);
+
+        /** Remove 2 last cards from list of opened cards. */
+       openCardsArr.splice(openCardsArr.length -2, 2);
+
        /** After 1 s. hide cards.*/
-       let delay = setTimeout(function () {
-         /** Add again click to not matched cards. */
-         initClickCard();
-         removeClickMatched();
+       let alertPromise = new Promise((resolve, reject) => {
+         let delay = setTimeout(function () {
+           resolve('Success!');
+           clearTimeout(delay);
+         }, 500);
+       });
+       alertPromise.then(() => {
          /** Hide not matched cards.*/
          e.target.className = 'card';
          openedCard.classList.remove('show', 'open', 'not-match');
-         /** Add cards to opened list. */
-         openedCardsList(e);
-         /** Remove last card from list of opened cards. */
-         openCardsArr.splice(openCardsArr.length -2, 2);
-         console.log(openCardsArr);
-         clearTimeout(delay);
-       }, 500);
+         /** Add again click to all cards. */
+         initClickCard();
+          /** Remove click from all opened cards. */
+         removeClickMatched();
+       });
 
      };
 
      /** Open card when odd click. */
    } else {
-     /** Add this card to list of opened cards. */
-     openedCardsList(e);
-     /** Prevent second click on same card. */
+     openCardsArr.push(e.target);
      e.target.removeEventListener('click', clickCard);
+     /** Remove click from all opened cards. */
+     removeClickMatched();
+     /** Set name of first(odd) card. */
+     firstCard(e);
    }
  }
 
@@ -195,7 +224,7 @@ function shuffle(array) {
  * @function
  * @description Display moves and stars.
  */
- function incrementCounter() {
+ const incrementCounter = () => {
    counter++;
    displayMoves.forEach((el) => {
      el.innerText = counter;
@@ -218,7 +247,7 @@ function shuffle(array) {
  * @function
  * @description Display final crores.
  */
- function finalScore() {
+ const finalScore = () => {
    if(openCardsArr.length === 16) {
      popup.style.display = 'block';
      popup.classList.add('slide-bottom');
@@ -230,7 +259,7 @@ function shuffle(array) {
  * @function
  * @description After click card increment counter, display this card symbol and check opened cards list.
  */
- function clickCard(e) {
+ const clickCard = (e) => {
    incrementCounter();
    displaySymbol(e);
    checkList(e);
@@ -240,7 +269,7 @@ function shuffle(array) {
  * @function
  * @description Set timer.
  */
- function stopwatch() {
+ const stopwatch = () => {
    startTimer = setTimeout(function () {
      timeOfGame++;
      //displayTime.innerText = timeOfGame;
@@ -255,7 +284,7 @@ function shuffle(array) {
 init();
 
 /** Restart game*/
-restart.forEach((el)=>{
+restart.forEach((el) => {
   el.addEventListener('click', function(e) {
     init();
   });

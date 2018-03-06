@@ -236,19 +236,35 @@ h1 {
   }
 }
 
-
-@media screen and (max-width: 679px) {
+@media screen and (max-width: 450px) {
   .deck {
-      width: 100%;
-      min-height: 400px;
+      width: 350px;
+      min-height: 350px;
+      margin: 0;
+      padding: 5px;
+  }
+
+  .deck .card {
+      width: 83px;
+      height: 83px;
       margin: 0;
       padding: 0;
   }
 
+}
+
+@media screen and (min-width: 451px) and (max-width: 679px) {
+  .deck {
+      width: 451px;
+      min-height: 451px;
+      margin: 0;
+      padding: 5px;
+  }
+
   .deck .card {
-      flex: 0 1 calc(25% - 5px);
+      width: 100px;
       height: 100px;
-      margin: 2px;
+      margin: 1px;
       padding: 0;
   }
 
