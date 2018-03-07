@@ -135,7 +135,7 @@ const shuffle = (array) => {
  * @description Get name of  first opened card.
  */
  const firstCard = (e) => {
-  openedCard = e.target;
+   openedCard = e.target;
  }
 
  /**
@@ -146,21 +146,23 @@ const shuffle = (array) => {
    let arrOfClass = [];
    openCardsArr.forEach((el) => {
      arrOfClass.push(el.firstElementChild.className);
-   })
+   });
    return arrOfClass.includes(e.target.firstElementChild.className);
  }
 
  /**
  * @function
- * @description Check opened cards list.
+ * @description Check odd and even click.
  */
  const checkList = (e) => {
+
    /** Check even clicks. */
    if (counter % 2 === 0) {
+
      /** Check if cards match. */
      /** If cards match. */
      if (compareCards(e)) {
-       var similarCards =  document.getElementsByClassName(e.target.className);
+       let similarCards =  document.getElementsByClassName(e.target.className);
 
        /** Set style to 'match'. */
        for (let a = 0; a < similarCards.length; a++) {
@@ -168,7 +170,7 @@ const shuffle = (array) => {
        };
 
        /** Insert card to list of opened cards. */
-       openCardsArr.push(e.target);
+       openedCardsList(e);
 
        /** Remove click from matched cards. */
        removeClickMatched();
@@ -184,11 +186,12 @@ const shuffle = (array) => {
        /** Add not-match style to last 2 cards. */
        openedCard.classList.add('not-match');
        e.target.classList.add('not-match');
-        /** Insert card to list of opened cards. */
+
+        /** Insert clicked card to list of opened cards. */
        openedCardsList(e);
 
         /** Remove 2 last cards from list of opened cards. */
-       openCardsArr.splice(openCardsArr.length -2, 2);
+       openCardsArr.splice(openCardsArr.length - 2, 2);
 
        /** After 1 s. hide cards.*/
        let alertPromise = new Promise((resolve, reject) => {
@@ -198,23 +201,30 @@ const shuffle = (array) => {
          }, 500);
        });
        alertPromise.then(() => {
+
          /** Hide not matched cards.*/
          e.target.className = 'card';
          openedCard.classList.remove('show', 'open', 'not-match');
+
          /** Add again click to all cards. */
          initClickCard();
+
           /** Remove click from all opened cards. */
          removeClickMatched();
        });
-
      };
 
      /** Open card when odd click. */
    } else {
-     openCardsArr.push(e.target);
+     /** Insert clicked card to list of opened cards. */
+     openedCardsList(e);
+
+     /** Remove click from last opened cards. */
      e.target.removeEventListener('click', clickCard);
+
      /** Remove click from all opened cards. */
      removeClickMatched();
+
      /** Set name of first(odd) card. */
      firstCard(e);
    }
@@ -236,9 +246,9 @@ const shuffle = (array) => {
       };
       break;
      case counter > 24:
-     for (let i = 0; i < stars.length; i++) {
-       stars[i].children[1].style.display = 'none';
-     };
+       for (let i = 0; i < stars.length; i++) {
+         stars[i].children[1].style.display = 'none';
+       };
       break;
    };
  }
@@ -272,7 +282,6 @@ const shuffle = (array) => {
  const stopwatch = () => {
    startTimer = setTimeout(function () {
      timeOfGame++;
-     //displayTime.innerText = timeOfGame;
      displayTime.forEach((el) => {
        el.innerText = timeOfGame;
      });

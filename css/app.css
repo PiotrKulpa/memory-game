@@ -148,6 +148,7 @@ h1 {
  * animation shake-horizontal
  * ----------------------------------------
  */
+
 @-webkit-keyframes shake-horizontal {
   0%,
   100% {
@@ -236,6 +237,10 @@ h1 {
   }
 }
 
+/*
+ * Styles for the Smartphones
+ */
+
 @media screen and (max-width: 450px) {
   .deck {
       width: 350px;
@@ -252,6 +257,10 @@ h1 {
   }
 
 }
+
+/*
+ * Styles for the Tablets
+ */
 
 @media screen and (min-width: 451px) and (max-width: 679px) {
   .deck {
