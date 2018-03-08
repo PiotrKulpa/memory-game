@@ -3,7 +3,7 @@
 ## Table of Contents
 
 * [Instructions](#instructions)
-* [Code Dependencies](#code dependencies)
+* [Dependencies](#dependencies)
 * [Details](#details)
 * [Rules](#rules)
 
@@ -15,7 +15,7 @@ To get started, open `js/app.js` and start building out the app's functionality
 
 For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
 
-## Code Dependencies
+## Dependencies
 
 The app is built with the following code dependencies:
 
