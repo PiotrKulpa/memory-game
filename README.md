@@ -3,9 +3,9 @@
 ## Table of Contents
 
 * [Instructions](#instructions)
+* [Code Dependencies](#code dependencies)
 * [Details](#details)
 * [Rules](#rules)
-* [Contributing](#contributing)
 
 ## Instructions
 
@@ -14,6 +14,13 @@ The starter project has some HTML and CSS styling to display a static version of
 To get started, open `js/app.js` and start building out the app's functionality
 
 For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+
+## Code Dependencies
+
+The app is built with the following code dependencies:
+
+1. Font Awesome
+2. Google Fonts: Coda (designer Vernon Adams)
 
 ## Details
 
@@ -30,9 +37,3 @@ For specific, detailed instructions, look at the project instructions in the [Ud
 ## Rules
 
 Check all similar cards as fast as You can. When two cards match game should show them with green background. Otherwise game will hide not matching cards.
-
-## Contributing
-
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
