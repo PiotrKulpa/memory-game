@@ -21,6 +21,8 @@ The app is built with the following code dependencies:
 
 1. Font Awesome
 2. Google Fonts: Coda (designer Vernon Adams)
+3. Main CSS file in css/app.css folder
+4. Main JS file in js/app.js folder
 
 ## Details
 
